@@ -7,6 +7,7 @@ import model.Task;
 import org.bson.Document;
 
 import javax.print.Doc;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -162,6 +163,69 @@ public class TaskRepositoryImpl implements ITaskRepository{
         Document filter = new Document("taskId", taskId);
         Document update = new Document("$set", new Document("dueDate", dueDate));
         return collection.updateOne(filter, update).getModifiedCount() > 0;
+    }
+
+    @Override
+    public List<Task> findTaskByStatus(String status) {
+        Document filter = new Document("status", status);
+        FindIterable<Document> taskList = collection.find(filter);
+        List<Task> tasks = new ArrayList<>();
+        for (Document doc: taskList){
+            Date dueDateDate = doc.getDate("dueDate");
+            Date createdAtDate = doc.getDate("createdAt");
+            LocalDateTime createdAt = createdAtDate != null
+                    ? createdAtDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+                    : null;
+
+            LocalDateTime dueDate = dueDateDate != null
+                    ? dueDateDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+                    : null;
+            Task task = new Task(
+                    doc.getString("taskId"),
+                    doc.getString("title"),
+                    doc.getString("description"),
+                    doc.getString("status"),
+                    doc.getString("userId"),
+                    createdAt,
+                    dueDate
+                    );
+            tasks.add(task);
+        }
+        return tasks;
+    }
+
+    @Override
+    public List<Task> findTaskByCreatedAt(String createdAtInput) {
+        Document filter = new Document("$expr",
+                new Document("$eq", List.of(
+                        new Document("$dateToString", new Document("format", "%Y-%m-%d").append("date", "$createdAt")),
+                        createdAtInput
+                ))
+        );
+        FindIterable<Document> taskList = collection.find(filter);
+        List<Task> tasks = new ArrayList<>();
+        for (Document doc: taskList){
+            Date dueDateDate = doc.getDate("dueDate");
+            Date createdAtDate = doc.getDate("createdAt");
+            LocalDateTime createdAt = createdAtDate != null
+                    ? createdAtDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+                    : null;
+
+            LocalDateTime dueDate = dueDateDate != null
+                    ? dueDateDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+                    : null;
+            Task task = new Task(
+                    doc.getString("taskId"),
+                    doc.getString("title"),
+                    doc.getString("description"),
+                    doc.getString("status"),
+                    doc.getString("userId"),
+                    createdAt,
+                    dueDate
+            );
+            tasks.add(task);
+        }
+        return tasks;
     }
 
 

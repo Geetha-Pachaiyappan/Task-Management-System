@@ -5,7 +5,10 @@ import model.TaskStatus;
 import repository.ITaskRepository;
 import repository.IUserRepository;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public class TaskService {
@@ -116,6 +119,21 @@ public class TaskService {
     public void showTaskAfterUpdate(String taskId) {
         Task updatedTask = taskRepository.findByTaskId(taskId);
         System.out.println("Updated Task Details: " + updatedTask);
+    }
+
+    public void getTasksByStatus(String status){
+        List<Task> taskList = taskRepository.findTaskByStatus(status);
+        if(taskList != null && !taskList.isEmpty())
+            System.out.println(taskList);
+        else
+            System.out.println("No Task Found!");
+    }
+    public void getTasksByCreatedAt(String createdAt)  {
+        List<Task> taskList = taskRepository.findTaskByCreatedAt(createdAt);
+        if(taskList != null && !taskList.isEmpty())
+            System.out.println(taskList);
+        else
+            System.out.println("No Task Found!");
     }
 
 }

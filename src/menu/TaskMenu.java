@@ -1,5 +1,6 @@
 package menu;
 
+import exceptionHandling.DateFormatNotValidException;
 import exceptionHandling.DueDateFormatNotValidateException;
 import exceptionHandling.EmailNotValidException;
 import exceptionHandling.UsernameNotValidException;
@@ -124,9 +125,41 @@ public class TaskMenu {
                 break;
             }
             case 5 -> {
-                System.out.println("Enter TaskId: ");
-                String taskId = scan.nextLine();
-                taskService.findByTaskId(taskId);
+                Menus.searchTaskMenu();
+                int searchTask = scan.nextInt();
+                scan.nextLine();
+                switch (searchTask){
+                    case 1 -> {
+                        System.out.println("Enter TaskId: ");
+                        String taskId = scan.nextLine();
+                        taskService.findByTaskId(taskId);
+                        break;
+                    }
+                    case 2 -> {
+                        System.out.println("Enter Status(PENDING, IN_PROCESS, COMPLETED) : ");
+                        String status = scan.nextLine();
+                        if(TaskValidation.isStatusValid(status.trim().toUpperCase()))
+                            taskService.getTasksByStatus(status.trim().toUpperCase());
+                        else
+                            System.out.println("Invalid Inputs");
+                        break;
+                    }
+                    case 3 -> {
+                        System.out.println("Enter Created Date (format: yyyy-MM-dd): ");
+                        String createdDate = scan.nextLine();
+                        try {
+                            TaskValidation.convertAndValidateDate(createdDate);
+                            taskService.getTasksByCreatedAt(createdDate);
+                        } catch (DateFormatNotValidException e) {
+                            throw new RuntimeException(e);
+                        }
+                        break;
+                    }
+                    default -> {
+                        System.out.println("Invalid Input");
+                        break;
+                    }
+                }
                 break;
             }
             default -> {

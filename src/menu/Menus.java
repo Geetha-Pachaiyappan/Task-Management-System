@@ -55,7 +55,13 @@ public class Menus {
         System.out.println("4. Update Due Date");
         System.out.print(" ===> Enter your choice: ");
     }
-
+    public static void searchTaskMenu(){
+        System.out.println("\n========== SEARCH TASK MENU ==========");
+        System.out.println("1. Search By TaskId");
+        System.out.println("2. Search by Status");
+        System.out.println("3. Search By Created Date");
+        System.out.print(" ===> Enter your choice: ");
+    }
 
 
 }

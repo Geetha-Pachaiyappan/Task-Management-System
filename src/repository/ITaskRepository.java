@@ -3,6 +3,7 @@ package repository;
 import model.Task;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public interface ITaskRepository {
@@ -16,5 +17,6 @@ public interface ITaskRepository {
     boolean updateDescriptionByTaskId(String taskId, String description);
     boolean updateStatusByTaskId(String taskId, String status);
     boolean updateDueDateByTaskId(String taskId, LocalDateTime dueDate);
-
+    List<Task> findTaskByStatus(String status);
+    List<Task> findTaskByCreatedAt(String createdAt);
 }

@@ -1,5 +1,6 @@
 package validation;
 
+import exceptionHandling.DateFormatNotValidException;
 import exceptionHandling.DueDateFormatNotValidateException;
 import model.TaskStatus;
 
@@ -24,6 +25,13 @@ public class TaskValidation {
             return true;
         }catch (IllegalArgumentException exception){
             return false;
+        }
+    }
+
+    public static void convertAndValidateDate(String createdDate) throws DateFormatNotValidException {
+        if(createdDate == null || createdDate.isEmpty() ||
+                !createdDate.matches("\\d{4}-\\d{2}-\\d{2}")){
+            throw new DateFormatNotValidException("Date Format Not Valid");
         }
     }
 }

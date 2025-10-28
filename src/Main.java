@@ -4,10 +4,7 @@ import exceptionHandling.UsernameNotValidException;
 import menu.Menus;
 import menu.TaskMenu;
 import menu.UserMenu;
-import repository.ConnectionDao;
-import repository.IUserRepository;
-import repository.TaskRepositoryImpl;
-import repository.UserRepositoryImpl;
+import repository.*;
 import service.TaskService;
 import service.UserService;
 
@@ -18,8 +15,11 @@ public class Main {
 
         Scanner scan = new Scanner(System.in);
         int input = 0;
-        UserService userService = new UserService(new UserRepositoryImpl(new ConnectionDao()));
-        TaskService taskService = new TaskService(new TaskRepositoryImpl(new ConnectionDao()), new UserRepositoryImpl(new ConnectionDao()));
+        ConnectionDao connectionDao = new ConnectionDao();
+        IUserRepository userRepository = new UserRepositoryImpl(connectionDao);
+        ITaskRepository taskRepository = new TaskRepositoryImpl(connectionDao);
+        UserService userService = new UserService(userRepository);
+        TaskService taskService = new TaskService(taskRepository,userRepository);
         do{
             Menus.mainMenu();
             input = scan.nextInt();

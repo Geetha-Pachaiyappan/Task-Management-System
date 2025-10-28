@@ -73,11 +73,31 @@ public class UserMenu {
                 break;
             }
             case 3 -> {
+                Menus.updateUserMenu();
+                int updateUser = scan.nextInt();
+                scan.nextLine();
                 System.out.println("Enter UserId: ");
                 String userId = scan.nextLine();
-                Map<String,String> user = getUserInput();
-                userService.updateByUserId(userId,user.get("name"),user.get("email"));
-                System.out.println("User updated successfully with userId: " + userId);
+                switch (updateUser){
+                    case 1 -> {
+                        System.out.println("Enter Username: ");
+                        String username = scan.nextLine();
+                        userService.updateUsernameByUserId(userId,username);
+                        break;
+                    }
+                    case 2 -> {
+                        System.out.println("Enter Email: ");
+                        String email = scan.nextLine();
+                        userService.updateEmailByUserId(userId,email);
+                        break;
+                    }
+                    default -> {
+                        System.out.println("Invalid Input");
+                        break;
+                    }
+                }
+
+
                 break;
             }
             case 4 -> {

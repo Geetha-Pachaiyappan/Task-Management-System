@@ -68,14 +68,18 @@ public class UserRepositoryImpl implements IUserRepository{
         return deleteResult.getDeletedCount() > 0;
     }
 
-    public void updateByUserId(String userId, String userName, String email){
+    @Override
+    public boolean updateUsernameByUserId(String userId, String userName) {
         Document filter = new Document("userId", userId);
-        Document updatedFields = new Document();
-        updatedFields.append("userName",userName);
-        updatedFields.append("email",email);
-        Document update = new Document("$set", updatedFields);
-        collection.updateOne(filter, update);
+        Document update = new Document("$set", new Document("userName",userName));
+        return collection.updateOne(filter,update).getModifiedCount() > 0;
+    }
 
+    @Override
+    public boolean updateEmailByUserId(String userId, String email) {
+        Document filter = new Document("userId", userId);
+        Document update = new Document("$set", new Document("email", email));
+        return collection.updateOne(filter,update).getModifiedCount() > 0;
     }
 
     @Override

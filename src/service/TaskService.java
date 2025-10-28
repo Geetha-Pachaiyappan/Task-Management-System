@@ -76,30 +76,46 @@ public class TaskService {
 
     public void updateTitle(String taskId, String title) {
         if (taskRepository.updateTitleByTaskId(taskId, title))
+        {
+            showTaskAfterUpdate(taskId);
             System.out.println("Title updated successfully!");
+        }
         else
             System.out.println("Task ID not found!");
     }
 
     public void updateDescription(String taskId, String description) {
         if (taskRepository.updateDescriptionByTaskId(taskId, description))
+        {
+            showTaskAfterUpdate(taskId);
             System.out.println("Description updated successfully!");
+        }
         else
             System.out.println("Task ID not found!");
     }
 
     public void updateStatus(String taskId, String status) {
-        if (taskRepository.updateStatusByTaskId(taskId, status))
+        if (taskRepository.updateStatusByTaskId(taskId, status)) {
+            showTaskAfterUpdate(taskId);
             System.out.println("Status updated successfully!");
+        }
         else
             System.out.println("Task ID not found!");
     }
 
     public void updateDueDate(String taskId, LocalDateTime dueDate) {
         if (taskRepository.updateDueDateByTaskId(taskId, dueDate))
+        {
+            showTaskAfterUpdate(taskId);
             System.out.println("Due date updated successfully!");
+        }
         else
             System.out.println("Task ID not found!");
+    }
+
+    public void showTaskAfterUpdate(String taskId) {
+        Task updatedTask = taskRepository.findByTaskId(taskId);
+        System.out.println("Updated Task Details: " + updatedTask);
     }
 
 }

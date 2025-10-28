@@ -11,6 +11,7 @@ public interface IUserRepository {
     List<User> findAll();
     User findByUserId(String userId);
     boolean deleteByUserId(String userId);
-    void updateByUserId(String userId, String userName, String email);
+    boolean updateUsernameByUserId(String userId, String userName);
+    boolean updateEmailByUserId(String userId, String email);
     User getLastUser();
 }

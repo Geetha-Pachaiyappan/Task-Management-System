@@ -24,6 +24,12 @@ public class Menus {
         System.out.println("2. Add Multiple Users");
         System.out.print(" ===> Enter your choice: ");
     }
+    public static void updateUserMenu(){
+        System.out.println("\n========== UPDATE USER MENU ==========");
+        System.out.println("1. Update Username");
+        System.out.println("2. Update Email");
+        System.out.print(" ===> Enter your choice: ");
+    }
     public static void taskMenu(){
         System.out.println("\n========== TASK MENU ==========");
         System.out.println("1. Add Task");

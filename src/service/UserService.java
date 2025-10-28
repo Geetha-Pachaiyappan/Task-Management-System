@@ -117,7 +117,18 @@ public class UserService {
             System.out.println("User Not Found");
     }
 
-    public void updateByUserId(String userId, String username, String email){
-        userRepository.updateByUserId(userId,username,email);
+    public void updateUsernameByUserId(String userId, String username){
+       if(userRepository.updateUsernameByUserId(userId,username))
+           System.out.println("User updated successfully with userId: " + userId);
+       else
+           System.out.println("Invalid Inputs");
     }
+
+    public void updateEmailByUserId(String userId, String email){
+        if(userRepository.updateEmailByUserId(userId,email))
+            System.out.println("User updated successfully with userId: " + userId);
+        else
+            System.out.println("Invalid Inputs");
+    }
+
 }

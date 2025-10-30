@@ -135,5 +135,11 @@ public class TaskService {
         else
             System.out.println("No Task Found!");
     }
-
+    public void findByUserId(String userId) {
+        List<Task> taskList = taskRepository.findTaskByUserId(userId);
+        if(taskList != null && !taskList.isEmpty())
+            taskList.forEach(System.out::println);
+        else
+            System.out.println("No Task Found!");
+    }
 }

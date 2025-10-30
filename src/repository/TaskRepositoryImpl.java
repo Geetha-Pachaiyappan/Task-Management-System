@@ -228,5 +228,34 @@ public class TaskRepositoryImpl implements ITaskRepository{
         return tasks;
     }
 
+    @Override
+    public List<Task> findTaskByUserId(String userId) {
+        Document filter = new Document("userId", userId);
+        FindIterable<Document> taskList = collection.find(filter);
+        List<Task> tasks = new ArrayList<>();
+        for (Document doc: taskList){
+            Date dueDateDate = doc.getDate("dueDate");
+            Date createdAtDate = doc.getDate("createdAt");
+            LocalDateTime createdAt = createdAtDate != null
+                    ? createdAtDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+                    : null;
+
+            LocalDateTime dueDate = dueDateDate != null
+                    ? dueDateDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+                    : null;
+            Task task = new Task(
+                    doc.getString("taskId"),
+                    doc.getString("title"),
+                    doc.getString("description"),
+                    doc.getString("status"),
+                    doc.getString("userId"),
+                    createdAt,
+                    dueDate
+            );
+            tasks.add(task);
+        }
+        return tasks;
+    }
+
 
 }

@@ -155,6 +155,11 @@ public class TaskMenu {
                         }
                         break;
                     }
+                    case 4 ->{
+                        System.out.println("Enter UserId: ");
+                        String userId = scan.nextLine();
+                        taskService.findByUserId(userId);
+                    }
                     default -> {
                         System.out.println("Invalid Input");
                         break;

@@ -19,4 +19,5 @@ public interface ITaskRepository {
     boolean updateDueDateByTaskId(String taskId, LocalDateTime dueDate);
     List<Task> findTaskByStatus(String status);
     List<Task> findTaskByCreatedAt(String createdAt);
+    List<Task> findTaskByUserId(String userId);
 }

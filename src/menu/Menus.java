@@ -60,6 +60,7 @@ public class Menus {
         System.out.println("1. Search By TaskId");
         System.out.println("2. Search by Status");
         System.out.println("3. Search By Created Date");
+        System.out.println("4. Search By UserId: ");
         System.out.print(" ===> Enter your choice: ");
     }
 
